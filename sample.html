@@ -2,9 +2,30 @@
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
+        <script type="importmap">
+             {
+                "imports": {
+                    "three": "https://cdn.jsdelivr.net/npm/three@0.175.0/build/three.module.js"
+                }
+            }   
+        </script>
+        <script type="module">
+            import * as THREE from "three";
+
+            //サイズの設定
+            const width = 960;
+            const height = 540;
+
+            //レンダラーの作成
+            const renderer = new THREE.WebGLRenderer({
+                canvas: document.querySelector("#mycanvas")//ここまで
+            })
+        </script>
     </head>
     <title>sample site</title>
     <body>
-        <h1>site body</h1>
+        <div class="body">
+            <h1>site body</h1>
+        </div>
     </body>
 </html>
