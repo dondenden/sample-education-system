@@ -24,7 +24,18 @@
             renderer.setPixelRatio(window.devicePixelRatio);
             renderer.setSize(width,height);
 
-            
+            //シーンの作成
+            const scene = new THREE.Sence();
+
+            //カメラの作成
+            const camera = new THREE.PerspectiveCamera(45, width / height);
+            camera.position.set(0,0,+1000);
+
+            const geometry = new THREE.BoxGeometry(100,100,100);
+            const material = new THREE.MeshNormalMaterial();
+            const box = new THREE.Mesh(geometry,material);
+            scene.add(box);
+            //ここまで
         </script>
     </head>
     <title>sample site</title>
