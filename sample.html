@@ -35,13 +35,18 @@
             const material = new THREE.MeshNormalMaterial();
             const box = new THREE.Mesh(geometry,material);
             scene.add(box);
-            //ここまで
+
+            tick();
+            function tick(){
+                box.rotation.y += 0.01;
+                renderer.render(scene, camera);
+                requestAnimationFrame(tick);
+            }
+
         </script>
     </head>
     <title>sample site</title>
     <body>
-        <div class="body">
-            <h1>site body</h1>
-        </div>
+        <canvas id="myCanvas"></canvas>
     </body>
 </html>
