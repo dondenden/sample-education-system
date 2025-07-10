@@ -54,7 +54,6 @@
 
       tick();
       function tick() {
-        box.rotation.y += 0.01;
         renderer.render(scene, camera);
         requestAnimationFrame(tick);
       }
@@ -64,3 +63,7 @@
     <canvas id="myCanvas"></canvas>
   </body>
 </html>
+
+<!--
+HTMLとthree.jsを合成した。その後分離し、canvas=idの部分を全画面サイズwvでジャストに調整。全画面表示化させた
+-->
