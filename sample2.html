@@ -1,10 +1,27 @@
 <!DOCTYPE html>
 <html lang="ja">
-    <head>
-        <meta charset="utf-8">
-        <title>sample2 Jvascriptの実験</title>
-    </head>
-    <body>
-        <h1>実験</h1>
-    </body>
+<head>
+  <meta charset="UTF-8" />
+  <title>キーボード入力</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding-top: 100px;
+      font-size: 24px;
+    }
+  </style>
+</head>
+<body>
+  <div>キーを押してください</div>
+  <p id="output">...</p>
+
+  <script>
+    document.addEventListener("keydown", (event) => {
+      const key = event.key;
+      console.log("押されたキー:", key);
+      document.getElementById("output").textContent = `押したキー：${key}`;
+    });
+  </script>
+</body>
 </html>
