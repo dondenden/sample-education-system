@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <title>キーボード入力</title>
+  <title>キー入力で変数変更</title>
   <style>
     body {
       font-family: sans-serif;
@@ -13,14 +13,27 @@
   </style>
 </head>
 <body>
-  <div>キーを押してください</div>
-  <p id="output">...</p>
+  <p>押した方向キー：<span id="output">なし</span></p>
 
   <script>
+    // 初期の変数
+    let direction = "none";
+
+    // キーが押されたら
     document.addEventListener("keydown", (event) => {
-      const key = event.key;
-      console.log("押されたキー:", key);
-      document.getElementById("output").textContent = `押したキー：${key}`;
+      if (event.key === "ArrowUp") {
+        direction = "上";
+      } else if (event.key === "ArrowDown") {
+        direction = "下";
+      } else if (event.key === "ArrowLeft") {
+        direction = "左";
+      } else if (event.key === "ArrowRight") {
+        direction = "右";
+      }
+
+      // 表示を更新
+      document.getElementById("output").textContent = direction;
+      console.log("現在の方向:", direction);
     });
   </script>
 </body>
