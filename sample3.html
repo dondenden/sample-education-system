@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title>変数変更の実験</title>
+    </head>
+    <body>
+        <h1>入力</h1>
+        <script>
+            let direction = "none"
+
+            document.addEventListener("keydown", (event) => {
+                if (event.key === "1"){
+                    direction = "正面";
+                }else if(event.key === "2"){
+                    direction = "右";
+                }else if(event.key === "3"){
+                    direction = "後ろ";
+                }else if(event.key === "4"){
+                    direction = "左"
+                }
+
+                document.getElementById("output").textContent = direction;
+                console.log("現在の方向:",direction);;
+            })
+        </script>
+    </body>
+</html>
