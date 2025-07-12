@@ -6,6 +6,7 @@
     </head>
     <body>
         <h1>入力実験</h1>
+        <p>押した方向:<span id="変数">なし</span></p>
         <script>
             let direction = "none"
 
@@ -20,7 +21,8 @@
                     direction = "左"
                 }
             })
-            console.log(direction);
+            document.getElementById("変数").textContent = direction;
+            console.log("現在の方向:",direction);
         </script>
     </body>
 </html>
