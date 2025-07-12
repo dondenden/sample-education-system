@@ -5,7 +5,7 @@
         <title>変数変更の実験</title>
     </head>
     <body>
-        <h1>入力</h1>
+        <h1>入力実験</h1>
         <script>
             let direction = "none"
 
@@ -19,10 +19,8 @@
                 }else if(event.key === "4"){
                     direction = "左"
                 }
-
-                document.getElementById("output").textContent = direction;
-                console.log("現在の方向:",direction);;
             })
+            console.log(direction);
         </script>
     </body>
 </html>
