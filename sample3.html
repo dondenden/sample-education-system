@@ -1,38 +1,42 @@
 <!DOCTYPE html>
 <html lang="ja">
-    <head>
-        <meta charset="utf-8">
-        <title>変数変更の実験</title>
-    </head>
-    <style>
-        h1{
-            color:color;
-        }
-    </style>
-    <body>
-        <h1>入力実験</h1>
-        <p>押した方向:<span id="変数">なし</span></p>
-        <script>
-            let direction = "none"
-            let color = black
+<head>
+  <meta charset="utf-8" />
+  <title>変数変更の実験</title>
+  <style>
+    h1 {
+      transition: color 0.3s;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="タイトル">入力実験</h1>
+  <p>押した方向: <span id="変数">なし</span></p>
 
-            document.addEventListener("keydown", (event) => {
-                if (event.key === "1"){
-                    direction = "正面";
-                    color = crimson;
-                }else if(event.key === "2"){
-                    direction = "右";
-                    color = blue;
-                }else if(event.key === "3"){
-                    direction = "後ろ";
-                    color = cadetblue;
-                }else if(event.key === "4"){
-                    direction = "左"
-                    color = yellow;
-                }
-            })
-            document.getElementById("変数").textContent = direction;
-            console.log("現在の方向:",direction);
-        </script>
-    </body>
+  <script>
+    let direction = "none";
+    let color = "black";
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "1") {
+        direction = "正面";
+        color = "crimson";
+      } else if (event.key === "2") {
+        direction = "右";
+        color = "blue";
+      } else if (event.key === "3") {
+        direction = "後ろ";
+        color = "cadetblue";
+      } else if (event.key === "4") {
+        direction = "左";
+        color = "yellow";
+      }
+
+      // ここで表示と色を更新
+      document.getElementById("変数").textContent = direction;
+      document.getElementById("タイトル").style.color = color;
+      console.log("現在の方向:", direction);
+    });
+  </script>
+</body>
 </html>
