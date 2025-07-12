@@ -4,21 +4,31 @@
         <meta charset="utf-8">
         <title>変数変更の実験</title>
     </head>
+    <style>
+        h1{
+            color:color;
+        }
+    </style>
     <body>
         <h1>入力実験</h1>
         <p>押した方向:<span id="変数">なし</span></p>
         <script>
             let direction = "none"
+            let color = black
 
             document.addEventListener("keydown", (event) => {
                 if (event.key === "1"){
                     direction = "正面";
+                    color = crimson;
                 }else if(event.key === "2"){
                     direction = "右";
+                    color = blue;
                 }else if(event.key === "3"){
                     direction = "後ろ";
+                    color = cadetblue;
                 }else if(event.key === "4"){
                     direction = "左"
+                    color = yellow;
                 }
             })
             document.getElementById("変数").textContent = direction;
