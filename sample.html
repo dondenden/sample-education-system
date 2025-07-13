@@ -37,7 +37,7 @@
 
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(45, width / height);
-      camera.position.set(0, 0, 1000);
+      camera.position.set(positionx, positiony, positionz);
 
       const geometry = new THREE.BoxGeometry(200, 200, 200);
       const material = new THREE.MeshNormalMaterial();
@@ -61,6 +61,11 @@
   </head>
   <body>
     <canvas id="myCanvas"></canvas>
+    <script>
+        let positionx = 0;
+        let positiony = 0;
+        let positionz = 1000;
+    </script>
   </body>
 </html>
 
