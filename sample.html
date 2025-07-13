@@ -37,7 +37,7 @@
 
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(45, width / height);
-      camera.position.set(positionx, positiony, positionz);
+      camera.position.set(0, 0, 1000); // 初期位置
 
       const geometry = new THREE.BoxGeometry(200, 200, 200);
       const material = new THREE.MeshNormalMaterial();
@@ -52,33 +52,32 @@
         camera.updateProjectionMatrix();
       });
 
-      tick();
+      // キー入力でカメラの位置を変える
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "1") {
+          camera.position.set(0, 0, 500);
+          console.log("現在の方向: 正面");
+        } else if (event.key === "2") {
+          camera.position.set(1000, 1000, 1000);
+          console.log("現在の方向: テキトー");
+        }
+      });
+
       function tick() {
+        box.rotation.y += 0.01;
         renderer.render(scene, camera);
         requestAnimationFrame(tick);
       }
+
+      tick();
     </script>
   </head>
   <body>
     <canvas id="myCanvas"></canvas>
-    <script>
-        let positionx = 0;
-        let positiony = 0;
-        let positionz = 1000;
-        let direction = "none"
-
-        document.addEventListener("keydown",(event)=>{
-          if (event.key === "1"){
-            positionx = 0,positiony = 0,positionz = 0,direction = "正面";
-          } else if (event.key === "2"){
-            positionx = 1000,positiony = 1000,positionz = 1000,direction = "テキトー";
-          }
-          console.log("現在の方向:",direction);
-        })
-    </script>
   </body>
 </html>
 
 <!--
 HTMLとthree.jsを合成した。その後分離し、canvas=idの部分を全画面サイズwvでジャストに調整。全画面表示化させた
+7/13　手での関数によってカメラの方向が変更している
 -->
