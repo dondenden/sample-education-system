@@ -65,6 +65,16 @@
         let positionx = 0;
         let positiony = 0;
         let positionz = 1000;
+        let direction = "none"
+
+        document.addEventListener("keydown",(event)=>{
+          if (event.key === "1"){
+            positionx = 0,positiony = 0,positionz = 0,direction = "正面";
+          } else if (event.key === "2"){
+            positionx = 1000,positiony = 1000,positionz = 1000,direction = "テキトー";
+          }
+          console.log("現在の方向:",direction);
+        })
     </script>
   </body>
 </html>
