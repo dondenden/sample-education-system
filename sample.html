@@ -58,13 +58,13 @@
           camera.position.set(0, 0, 500);
           console.log("現在の方向: 正面");
         } else if (event.key === "2") {
-          camera.position.set(1000, 1000, 1000);
+          camera.position.set(500, 0, 0);
           console.log("現在の方向: テキトー");
         }
       });
 
       function tick() {
-        box.rotation.y += 0.01;
+        box.rotation.y += 0.00;
         renderer.render(scene, camera);
         requestAnimationFrame(tick);
       }
