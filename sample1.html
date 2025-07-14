@@ -68,9 +68,6 @@
 
       function tick() {
         requestAnimationFrame(tick);
-        if (duck) {
-          duck.rotation.y += 0.01; // アニメーション
-        }
         renderer.render(scene, camera);
       }
     </script>
