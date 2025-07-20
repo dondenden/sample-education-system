@@ -26,15 +26,15 @@
 
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-      camera.position.set(0, 1, 5);
+      camera.position.set(0, 1.5, 5);
 
       const renderer = new THREE.WebGLRenderer({ antialias: true });
       renderer.setSize(window.innerWidth, window.innerHeight);
       document.body.appendChild(renderer.domElement);
 
       // 光源
-      const light = new THREE.DirectionalLight(0xffffff, 1);
-      light.position.set(1, 1, 1);
+      const light = new THREE.DirectionalLight(0xffffff, 2);
+      light.position.set(0,2,1);
       scene.add(light);
 
       // 3Dモデル用の変数
@@ -58,11 +58,13 @@
       // カメラ移動（キー操作）
       document.addEventListener("keydown", (event) => {
         if (event.key === "1") {
-          camera.position.set(0, 0, 5);
+          camera.position.set(0, 1.5, 5);
+          camera.lookAt(0,1.5,5);
           console.log("現在の方向: 正面");
         } else if (event.key === "2") {
-          camera.position.set(2, 2, 5);
-          console.log("現在の方向: 斜め");
+          camera.position.set(0,6.5,5);
+          camera.lookAt(0,0,0);
+          console.log("現在の方向: 上45");
         }
       });
 
