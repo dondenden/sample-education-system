@@ -65,10 +65,14 @@
           camera.position.set(0,6.5,5);
           camera.lookAt(0,0,0);
           console.log("現在の方向: 上45");
-        } else if (event.key === "3") {
-          camera.position.set(0,-3.5,5);
+        } else if(event.key === "3") {
+          camera.position.set(0,-2.5,5);
           camera.lookAt(0,0,0);
-          console.log("現在の方向: 下")
+          console.log("現在の方向: 下45度");
+        } else if(event.key === "4") {
+          camera.position.set(4,5,4);
+          camera.lookAt(0,0,0);
+          console.log("現在の方向: 右45度");
         }
       });
 
