@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>3Dモデル表示</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+      canvas {
+        display: block;
+      }
+    </style>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.175.0/build/three.module.js",
+          "three/examples/jsm/loaders/GLTFLoader.js": "https://cdn.jsdelivr.net/npm/three@0.175.0/examples/jsm/loaders/GLTFLoader.js"
+        }
+      }
+    </script>
+    <script type="module">
+      import * as THREE from "three";
+      import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.set(0, 1.5, 5);
+
+      const renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      // 光源
+      const light = new THREE.DirectionalLight(0xffffff, 2);
+      light.position.set(0,2,1);
+      scene.add(light);
+
+      // 3Dモデル用の変数
+      let duck = null;
+
+      // モデル読み込み
+      const loader = new GLTFLoader();
+      loader.load(
+        'https://dondenden.github.io/sample-education-system/application%20schedule/Research Models.glb',
+        function (gltf) {
+          duck = gltf.scene;
+          scene.add(duck);
+          tick(); // 読み込み完了後にアニメーション開始
+        },
+        undefined,
+        function (error) {
+          console.error("モデルの読み込みに失敗:", error);
+        }
+      );
+
+      // カメラ移動（キー操作）
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "1") {
+          camera.position.set(0, 1.5, 5);
+          camera.lookAt(0,1.5,5);
+          console.log("現在の方向: 正面");
+        } else if (event.key === "2") {
+          camera.position.set(0,6.5,5);
+          camera.lookAt(0,0,0);
+          console.log("現在の方向: 上45");
+        } else if(event.key === "3") {
+          camera.position.set(0,-2.5,5);
+          camera.lookAt(0,0,0);
+          console.log("現在の方向: 下45度");
+        } else if(event.key === "4") {
+          camera.position.set(4,5,4);
+          camera.lookAt(0,0,0);
+          console.log("現在の方向: 右45度");
+        }
+      });
+
+      function tick() {
+        requestAnimationFrame(tick);
+        renderer.render(scene, camera);
+      }
+    </script>
+  </head>
+  <body></body>
+</html>
