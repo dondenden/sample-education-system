@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>リアルタイム同期</title>
+  <style>
+    #cursor {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: red;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+  <div id="cursor"></div>
+
+  <!-- Firebase SDKの読み込み -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <script>
+    // あなたのFirebase設定に置き換えてください
+    const firebaseConfig = {
+        apiKey: "AIzaSyBFXUDC3U2glx7UbkyigIYxGkSw9qhlYMU",
+        authDomain: "realtimesyncapp-3e1d6.firebaseapp.com",
+        databaseURL: "https://realtimesyncapp-3e1d6-default-rtdb.firebaseio.com",
+        projectId: "realtimesyncapp-3e1d6",
+        storageBucket: "realtimesyncapp-3e1d6.firebasestorage.app",
+        messagingSenderId: "584295413541",
+        appId: "1:584295413541:web:20a5ae6fcb742cf09d0ccc",
+        measurementId: "G-5YNKMHK2NY"
+};
+
+
+    // 初期化
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    // 自分のマウス位置を送信
+    document.addEventListener("mousemove", (e) => {
+      db.ref("cursor").set({
+        x: e.clientX,
+        y: e.clientY
+      });
+    });
+
+    // 他人のマウス位置を受信して表示
+    const cursor = document.getElementById("cursor");
+    db.ref("cursor").on("value", (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        cursor.style.left = data.x + "px";
+        cursor.style.top = data.y + "px";
+      }
+    });
+  </script>
+</body>
+</html>
