@@ -12,6 +12,19 @@
         display: block;
       }
     </style>
+    <script>
+        //firebase設定
+        const firebaseConfig = {
+            apiKey: "AIzaSyBFXUDC3U2glx7UbkyigIYxGkSw9qhlYMU",
+            authDomain: "realtimesyncapp-3e1d6.firebaseapp.com",
+            databaseURL: "https://realtimesyncapp-3e1d6-default-rtdb.firebaseio.com",
+            projectId: "realtimesyncapp-3e1d6",
+            storageBucket: "realtimesyncapp-3e1d6.firebasestorage.app",
+            messagingSenderId: "584295413541",
+            appId: "1:584295413541:web:20a5ae6fcb742cf09d0ccc",
+            measurementId: "G-5YNKMHK2NY"
+        };
+    </script>
     <script type="importmap">
       {
         "imports": {
@@ -54,6 +67,33 @@
           console.error("モデルの読み込みに失敗:", error);
         }
       );
+
+      //firebase初期化
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.database();
+
+      //入力したキーを送信
+      document.addEventListener("keydown", (event) => {
+        db.ref("camerakey").set(event.key);
+      });
+
+      //受信
+      db.ref("camerakey").on("value",(snapshot)=>{
+        const key = snapshot.val();
+        if (key === "1") {
+          camera.position.set(0, 1.5, 5);
+          camera.lookAt(0,1.5,5);
+        } else if (key === "2") {
+          camera.position.set(0,6.5,5);
+          camera.lookAt(0,0,0);
+        } else if(key === "3") {
+          camera.position.set(0,-2.5,5);
+          camera.lookAt(0,0,0);
+        } else if(key === "4") {
+          camera.position.set(4,5,4);
+          camera.lookAt(0,0,0);
+        }
+      });
 
       // カメラ移動（キー操作）
       document.addEventListener("keydown", (event) => {
