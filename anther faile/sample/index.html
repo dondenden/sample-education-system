@@ -116,7 +116,7 @@
           position: camera.position,
           lookAt: { x: 0, y: 0, z: 0 }
         });
-        db.ref(`camerakey/${roomID}`).set(event.key);
+        db.ref(`camerakey/${roomID}/${connectionID}`).set(event.key);
 
         if (event.key === "1") {
           camera.position.set(0, 1.5, 5);
@@ -161,7 +161,7 @@
       });
 
       db.ref(`user/${roomID}/${connectionID}`).onDisconnect().remove();
-      db.ref(`camerakey/${roomID}`).onDisconnect().remove();
+      db.ref(`camerakey/${roomID}/${connectionID}`).onDisconnect().remove();
     </script>
   </head>
   <body>
