@@ -24,11 +24,9 @@
         display: block;
       }
     </style>
-    <!-- firebaseのsdk追加 -->
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
     <script>
-      //firebase設定
       const firebaseConfig = {
         apiKey: "AIzaSyBFXUDC3U2glx7UbkyigIYxGkSw9qhlYMU",
         authDomain: "realtimesyncapp-3e1d6.firebaseapp.com",
@@ -52,7 +50,6 @@
       import * as THREE from "three";
       import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
-      // --- URLからroomID取得 or 自動生成 ---
       const urlParams = new URLSearchParams(window.location.search);
       let roomID = urlParams.get("room");
       if (!roomID) {
@@ -74,17 +71,16 @@
       scene.add(light);
 
       let model = null;
-
       const loader = new GLTFLoader();
       loader.load(
         'https://dondenden.github.io/sample-education-system/application%20schedule/Research Models.glb',
-        function (gltf) {
+        (gltf) => {
           model = gltf.scene;
           scene.add(model);
           tick();
         },
         undefined,
-        function (error) {
+        (error) => {
           console.error("モデルの読み込みに失敗:", error);
         }
       );
@@ -92,11 +88,9 @@
       firebase.initializeApp(firebaseConfig);
       const db = firebase.database();
 
-      // connectionID生成（一意のユーザーID）
       const connectionID = Math.random().toString(36).substring(2);
       console.log("connectionID:", connectionID);
 
-      // 初期データ登録（自分のカメラ情報）
       db.ref(`user/${roomID}/${connectionID}`).set({
         camera: {
           position: { x: 0, y: 1.5, z: 5 },
@@ -104,26 +98,37 @@
         }
       });
 
-      // 他ユーザーの情報を取得（必要に応じて利用可能）
       db.ref(`user/${roomID}`).on("value", (snapshot) => {
         const users = snapshot.val();
         for (const id in users) {
-          if (id === connectionID) continue; // 自分のは無視
+          if (id === connectionID) continue;
           const userCam = users[id].camera;
-          // ここで他ユーザーのカメラ情報を使って何か処理可能
+          // 他ユーザーのカメラ情報を使う場合はここに追加
         }
       });
 
-      // キー入力時にカメラ操作情報をFirebaseに送信
       document.addEventListener("keydown", (event) => {
         db.ref(`user/${roomID}/${connectionID}/camera`).set({
           position: camera.position,
-          lookAt: { x: 0, y: 0, z: 0 } // ここは必要に応じて調整
+          lookAt: { x: 0, y: 0, z: 0 }
         });
         db.ref(`camerakey/${roomID}`).set(event.key);
+
+        if (event.key === "1") {
+          camera.position.set(0, 1.5, 5);
+          camera.lookAt(0, 1.5, 5);
+        } else if (event.key === "2") {
+          camera.position.set(0, 6.5, 5);
+          camera.lookAt(0, 0, 0);
+        } else if (event.key === "3") {
+          camera.position.set(0, -2.5, 5);
+          camera.lookAt(0, 0, 0);
+        } else if (event.key === "4") {
+          camera.position.set(4, 5, 4);
+          camera.lookAt(0, 0, 0);
+        }
       });
 
-      // Firebaseからのカメラ操作キー受信でカメラ移動
       db.ref(`camerakey/${roomID}`).on("value", (snapshot) => {
         const key = snapshot.val();
         if (key === "1") {
@@ -141,42 +146,27 @@
         }
       });
 
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "1") {
-          camera.position.set(0, 1.5, 5);
-          camera.lookAt(0, 1.5, 5);
-          console.log("現在の方向: 正面");
-        } else if (event.key === "2") {
-          camera.position.set(0, 6.5, 5);
-          camera.lookAt(0, 0, 0);
-          console.log("現在の方向: 上45");
-        } else if (event.key === "3") {
-          camera.position.set(0, -2.5, 5);
-          camera.lookAt(0, 0, 0);
-          console.log("現在の方向: 下45度");
-        } else if (event.key === "4") {
-          camera.position.set(4, 5, 4);
-          camera.lookAt(0, 0, 0);
-          console.log("現在の方向: 右45度");
-        }
-      });
-
       function tick() {
         requestAnimationFrame(tick);
         renderer.render(scene, camera);
       }
 
-      // 接続切れたら自分のデータを削除
+      // DOM構築完了後に roomID を表示
+      window.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("output").textContent = `roomID: ${roomID}`;
+      });
+
       db.ref(`user/${roomID}/${connectionID}`).onDisconnect().remove();
     </script>
   </head>
   <body>
     <div id="info">
       <strong>操作方法</strong><br>
-      -1:正面<br>
-      -2:上45度<br>
-      -3:下45度<br>
-      -4:右45度<br>
+      - 1: 正面<br>
+      - 2: 上45度<br>
+      - 3: 下45度<br>
+      - 4: 右45度<br>
+      <p id="output">roomIDが入ります</p>
     </div>
   </body>
 </html>
