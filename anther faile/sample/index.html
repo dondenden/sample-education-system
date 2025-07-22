@@ -8,6 +8,18 @@
         margin: 0;
         overflow: hidden;
       }
+      #info {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        padding: 10px 15px;
+        background-color: rgba(255, 255, 255, 0.8);
+        color: #000;
+        font-size: 14px;
+        font-family: sans-serif;
+        border-radius: 10px;
+        max-width: 300px;
+      }
       canvas {
         display: block;
       }
@@ -158,5 +170,13 @@
       db.ref(`user/${roomID}/${connectionID}`).onDisconnect().remove();
     </script>
   </head>
-  <body></body>
+  <body>
+    <div id="info">
+      <strong>操作方法</strong><br>
+      -1:正面<br>
+      -2:上45度<br>
+      -3:下45度<br>
+      -4:右45度<br>
+    </div>
+  </body>
 </html>
