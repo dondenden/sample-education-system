@@ -50,14 +50,18 @@
       import * as THREE from "three";
       import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
+      //URLの作成
       const urlParams = new URLSearchParams(window.location.search);
+      //roomIDの入手
       let roomID = urlParams.get("room");
+      //roomIDの作成
       if (!roomID) {
         roomID = Math.random().toString(36).substring(2, 10);
         history.replaceState(null, null, `?room=${roomID}`);
       }
       console.log("roomID:", roomID);
 
+      //Three.jsの作成
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
       camera.position.set(0, 1.5, 5);
@@ -85,6 +89,7 @@
         }
       );
 
+      //forebaseの宣言
       firebase.initializeApp(firebaseConfig);
       const db = firebase.database();
 
@@ -103,7 +108,6 @@
         for (const id in users) {
           if (id === connectionID) continue;
           const userCam = users[id].camera;
-          // 他ユーザーのカメラ情報を使う場合はここに追加
         }
       });
 
