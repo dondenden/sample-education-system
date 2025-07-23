@@ -69,7 +69,7 @@
 <body>
   <div class="main-theme">
     <h1>メインプラットフォーム</h1>
-    <a href="https://dondenden.github.io/sample-education-system/anther%20faile/sample/BOT" class="btn btn-youser">直接入室</a>
+    <a href="https://dondenden.github.io/sample-education-system/anther%20faile/sample/MID" class="btn btn-youser">直接入室</a>
     <a href="#" onclick="showfront()" class="btn btn-youser">ルームIDで入室</a>
   </div>
 
@@ -86,7 +86,7 @@
     function afterinput() {
       const roomID = document.getElementById("roomID").value.trim();
       if (roomID !== "") {
-        const newURL = `https://dondenden.github.io/sample-education-system/anther%20faile/sample/MID?room=${encodeURIComponent(roomID)}`;//ココ
+        const newURL = `https://dondenden.github.io/sample-education-system/anther%20faile/sample/BOT?room=${encodeURIComponent(roomID)}`;//ココ
         window.location.href = newURL;
       } else {
         alert("roomIDを入力してください。");
