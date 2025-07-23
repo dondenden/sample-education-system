@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ルーム確認</title>
+</head>
+<body>
+  <h2>入室準備中...</h2>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const roomID = urlParams.get("room");
+
+    if (!roomID) {
+      alert("roomIDが見つかりません");
+      window.location.href = "main.html"; // 元のページへ戻すなど
+    }
+
+    // 1秒後に index.html に遷移する（例：ローディング風）
+    setTimeout(() => {
+      window.location.href = `index.html?room=${encodeURIComponent(roomID)}`;
+    }, 1000);
+  </script>
+</body>
+</html>

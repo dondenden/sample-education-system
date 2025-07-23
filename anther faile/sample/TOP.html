@@ -86,7 +86,7 @@
     function afterinput() {
       const roomID = document.getElementById("roomID").value.trim();
       if (roomID !== "") {
-        const newURL = `https://dondenden.github.io/sample-education-system/anther%20faile/sample/index?room=${encodeURIComponent(roomID)}`;
+        const newURL = `?room=${encodeURIComponent(roomID)}`;//ココ
         window.location.href = newURL;
       } else {
         alert("roomIDを入力してください。");
