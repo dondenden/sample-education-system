@@ -4,8 +4,18 @@
   <meta charset="UTF-8">
   <title>ルーム確認</title>
 </head>
+<style>
+input {
+    padding: 10px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    }
+</style>
 <body>
   <h2>入室準備中...</h2>
+  <input type="text" id="name" placeholder="名前を入れてください">
+  <button onclick="enterRoom()">入室</button>
   <script>
     const urlParams = new URLSearchParams(window.location.search);
     let roomID = urlParams.get("room");
@@ -13,10 +23,12 @@
       roomID = Math.random().toString(36).substring(2, 10);
       history.replaceState(null, null, `?room=${roomID}`);
     }
-    // 10秒後に BOT.html に遷移する（例：ローディング風）
-    setTimeout(() => {
-      window.location.href = `https://dondenden.github.io/sample-education-system/anther%20faile/sample/BOT?room=${encodeURIComponent(roomID)}`;
-    }, 10000);
+    function enterRoom(){
+        // 10秒後に BOT.html に遷移する（例：ローディング風）
+        setTimeout(() => {
+            window.location.href = `https://dondenden.github.io/sample-education-system/anther%20faile/sample/BOT?room=${encodeURIComponent(roomID)}`;
+        }, 3000);
+    }
   </script>
 </body>
 </html>
