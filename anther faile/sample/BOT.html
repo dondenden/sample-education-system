@@ -159,6 +159,12 @@
       renderer.render(scene, camera);
     }
 
+    //リダイレクトの設定
+    if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+      // リロード時にだけリダイレクト
+      window.location.href = `https://dondenden.github.io/sample-education-system/anther%20faile/sample/MID?room=${encodeURIComponent(roomID)}&connection=${connectionID}`;
+    }
+
     // 自動削除設定
     db.ref(`user/${roomID}/${connectionID}`).onDisconnect().remove();
     db.ref(`camerakey/${roomID}`).onDisconnect().remove();
