@@ -56,19 +56,19 @@
       if (userName === "") {
         alert("名前を入力してください。");
         return;
-        console.log(userName)
       }
 
-      // 一意のIDを生成してデータ保存
       const connectionID = Math.random().toString(36).substring(2);
-      db.ref(`mid/${connectionID}`).set({
+
+      // データベースに保存
+      db.ref(`user/${roomID}/${connectionID}`).set({
         name: userName,
         timestamp: Date.now()
       });
 
-      // 3秒後にBOTページへ遷移（roomID付き）
+      // 遷移（roomIDとconnectionIDを渡す）
       setTimeout(() => {
-        window.location.href = `https://dondenden.github.io/sample-education-system/anther%20faile/sample/BOT?room=${encodeURIComponent(roomID)}`;
+        window.location.href = `https://dondenden.github.io/sample-education-system/anther%20faile/sample/BOT?room=${encodeURIComponent(roomID)}&connection=${connectionID}`;
       }, 100);
     }
   </script>
