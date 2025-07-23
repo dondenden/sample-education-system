@@ -8,9 +8,12 @@
   <h2>入室準備中...</h2>
   <script>
     const urlParams = new URLSearchParams(window.location.search);
-    const roomID = urlParams.get("room");
-    
-    // 1秒後に BOT.html に遷移する（例：ローディング風）
+    let roomID = urlParams.get("room");
+    if (!roomID) {
+      roomID = Math.random().toString(36).substring(2, 10);
+      history.replaceState(null, null, `?room=${roomID}`);
+    }
+    // 10秒後に BOT.html に遷移する（例：ローディング風）
     setTimeout(() => {
       window.location.href = `https://dondenden.github.io/sample-education-system/anther%20faile/sample/BOT?room=${encodeURIComponent(roomID)}`;
     }, 10000);
