@@ -109,7 +109,7 @@
       });
 
       //共通キーに同期用データ送信
-      db.ref(`camerakey/${roomID}`).set({
+      db.ref(`camerakey/${connectionID}/${roomID}`).set({
         key: event.key,
         sender: connectionID
       });
@@ -120,7 +120,7 @@
     });
 
     // 他人の入力を監視してカメラを動かす
-    db.ref(`camerakey/${roomID}`).on("value", (snapshot) => {
+    db.ref(`camerakey/${connectionID}/${roomID}`).on("value", (snapshot) => {
       const data = snapshot.val();
       if (!data) return;
 
