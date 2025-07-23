@@ -59,13 +59,15 @@
       }
 
       const connectionID = Math.random().toString(36).substring(2);
+      const timestamp = Date.now();
 
       // データベースに保存
       db.ref(`user/${roomID}/${connectionID}`).set({
         name: userName,
-        timestamp: Date.now()
+        timestamp: timestamp
       });
-      console.log(name,timestamp);
+      console.log("登録されたユーザー:",userName);
+      console.log("タイムスタンプ:",timestamp);
 
       // 遷移（roomIDとconnectionIDを渡す）
       setTimeout(() => {
