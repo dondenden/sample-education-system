@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8" />
-  <title>3Dモデル表示（同期対応）</title>
+  <title>3Dモデル表示</title>
   <style>
     body {
       margin: 0;
@@ -108,7 +108,7 @@
         lookAt: { x: 0, y: 0, z: 0 }
       });
 
-      // 🔄 共通キーに同期用データ送信
+      //共通キーに同期用データ送信
       db.ref(`camerakey/${roomID}`).set({
         key: event.key,
         sender: connectionID
@@ -119,7 +119,7 @@
       console.log("入力結果の送信:", event.key);
     });
 
-    // 🔁 他人の入力を監視してカメラを動かす
+    // 他人の入力を監視してカメラを動かす
     db.ref(`camerakey/${roomID}`).on("value", (snapshot) => {
       const data = snapshot.val();
       if (!data) return;
