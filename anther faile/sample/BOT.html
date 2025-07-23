@@ -163,6 +163,7 @@
     // 自動削除設定
     db.ref(`user/${roomID}/${connectionID}`).onDisconnect().remove();
     db.ref(`camerakey/${roomID}`).onDisconnect().remove();
+    db.ref(`mid/`).onDisconnect().remove();
   </script>
 </head>
 
