@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--a-->
 <html lang="ja">
 <head>
   <meta charset="utf-8" />
@@ -159,7 +160,7 @@
     });
 
     db.ref(`user/${roomID}/${connectionID}`).onDisconnect().remove();
-    db.ref(`camerakey/${roomID}/${connectionID}`).onDisconnect().remove();
+    db.ref(`camerakey/${roomID}`).onDisconnect().remove();
   </script>
 </head>
 
