@@ -22,7 +22,7 @@
 </head>
 <body>
   <h2>入室準備中...</h2>
-  <button onclick="firebase.database().ref('MID/test/connection1').set({name: 'テスト', timestamp: Date.now()})">テスト保存</button>
+  <!--<button onclick="firebase.database().ref('MID/test/connection1').set({name: 'テスト', timestamp: Date.now()})">テスト保存</button>-->
   <input type="text" id="name" placeholder="名前を入力してください">
   <button onclick="enterRoom()">入室</button>
 
@@ -71,9 +71,9 @@
       console.log("タイムスタンプ:",timestamp);
 
       // 遷移（roomIDとconnectionIDを渡す）
-      setTimeout(() => {
+      /*setTimeout(() => {
         window.location.href = `https://dondenden.github.io/sample-education-system/anther%20faile/sample/BOT?room=${encodeURIComponent(roomID)}&connection=${connectionID}`;
-      }, 100);
+      }, 100);*/
     }
   </script>
 </body>
