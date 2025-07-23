@@ -62,14 +62,13 @@
 
     const urlParams = new URLSearchParams(window.location.search);
     let roomID = urlParams.get("room");
+    let connectionID = urlParams.get("connection")
     if (!roomID) {
       roomID = Math.random().toString(36).substring(2, 10);
       history.replaceState(null, null, `?room=${roomID}`);
     }
     document.getElementById("output").textContent = `roomID: ${roomID}`;
-
-    const connectionID = Math.random().toString(36).substring(2);
-    console.log("connectionID:", connectionID);
+    console.log("connectionID:",connectionID);
 
     db.ref(`user/${roomID}/${connectionID}`).set({
       camera: {
