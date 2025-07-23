@@ -131,10 +131,12 @@
           camera.position.set(4, 5, 4);
           camera.lookAt(0, 0, 0);
         }
+        console.log("入力結果の送信")
       });
 
       db.ref(`camerakey/${roomID}`).on("value", (snapshot) => {
         const key = snapshot.val();
+        console.log("結果の受信")
         if (key === "1") {
           camera.position.set(0, 1.5, 5);
           camera.lookAt(0, 1.5, 5);
