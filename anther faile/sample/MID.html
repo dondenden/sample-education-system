@@ -62,7 +62,7 @@
       const timestamp = Date.now();
 
       // データベースに保存
-      db.ref(`user/${roomID}/${connectionID}`).set({
+      db.ref(`MID/${roomID}/${connectionID}`).set({
         name: userName,
         timestamp: timestamp
       });

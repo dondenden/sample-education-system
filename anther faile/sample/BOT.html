@@ -78,7 +78,7 @@
     });
 
     // ↓ ここで前ページで保存されたユーザーネームを取得・表示
-    db.ref(`user/${roomID}/${connectionID}/name`).once("value").then(snapshot => {
+    db.ref(`MID/${roomID}/${connectionID}/name`).once("value").then(snapshot => {
       const name = snapshot.val();
       if (name) {
         document.getElementById("name").textContent = `username: ${name}`;
