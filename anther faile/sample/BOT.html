@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!--a-->
 <html lang="ja">
 <head>
   <meta charset="utf-8" />
@@ -26,6 +25,7 @@
     }
   </style>
 
+  <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 
@@ -42,6 +42,7 @@
     };
   </script>
 
+  <!-- importmap for three.js -->
   <script type="importmap">
     {
       "imports": {
@@ -55,14 +56,39 @@
     import * as THREE from "three";
     import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
+    // Firebase init
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
     const urlParams = new URLSearchParams(window.location.search);
     let roomID = urlParams.get("room");
     if (!roomID) {
       roomID = Math.random().toString(36).substring(2, 10);
       history.replaceState(null, null, `?room=${roomID}`);
     }
-    console.log("roomID:", roomID);
+    document.getElementById("output").textContent = `roomID: ${roomID}`;
 
+    const connectionID = Math.random().toString(36).substring(2);
+    console.log("connectionID:", connectionID);
+
+    db.ref(`user/${roomID}/${connectionID}`).set({
+      camera: {
+        position: { x: 0, y: 1.5, z: 5 },
+        lookAt: { x: 0, y: 0, z: 0 }
+      }
+    });
+
+    // ↓ ここで前ページで保存されたユーザーネームを取得・表示
+    db.ref(`user/${roomID}/${connectionID}/name`).once("value").then(snapshot => {
+      const name = snapshot.val();
+      if (name) {
+        document.getElementById("name").textContent = `username: ${name}`;
+      } else {
+        document.getElementById("name").textContent = "username: 未登録";
+      }
+    });
+
+    // Scene setup
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.set(0, 1.5, 5);
@@ -75,13 +101,12 @@
     light.position.set(0, 2, 1);
     scene.add(light);
 
-    let model = null;
+    // Load model
     const loader = new GLTFLoader();
     loader.load(
       'https://dondenden.github.io/sample-education-system/application%20schedule/Research Models.glb',
       (gltf) => {
-        model = gltf.scene;
-        scene.add(model);
+        scene.add(gltf.scene);
         tick();
       },
       undefined,
@@ -90,48 +115,28 @@
       }
     );
 
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-
-    const connectionID = Math.random().toString(36).substring(2);
-    console.log("connectionID:", connectionID);
-
-    db.ref(`user/${roomID}/${connectionID}`).set({
-      camera: {
-        position: { x: 0, y: 1.5, z: 5 },
-        lookAt: { x: 0, y: 0, z: 0 }
-      }
-    });
-
+    // 入力処理
     document.addEventListener("keydown", (event) => {
       db.ref(`user/${roomID}/${connectionID}/camera`).set({
         position: camera.position,
         lookAt: { x: 0, y: 0, z: 0 }
       });
 
-      //共通キーに同期用データ送信
       db.ref(`camerakey/${roomID}`).set({
         key: event.key,
         sender: connectionID
       });
 
-      // 自分のカメラも動かす
       applyCameraView(event.key);
-      console.log("入力結果の送信:", event.key);
     });
 
-    // 他人の入力を監視してカメラを動かす
+    // 他のユーザーの入力を反映
     db.ref(`camerakey/${roomID}`).on("value", (snapshot) => {
       const data = snapshot.val();
       if (!data) return;
+      if (data.sender === connectionID) return;
 
-      const key = data.key;
-      const sender = data.sender;
-
-      if (sender === connectionID) return; // 自分はスキップ
-      console.log("他人の入力を受信:", key);
-
-      applyCameraView(key);
+      applyCameraView(data.key);
     });
 
     function applyCameraView(key) {
@@ -155,10 +160,7 @@
       renderer.render(scene, camera);
     }
 
-    window.addEventListener("DOMContentLoaded", () => {
-      document.getElementById("output").textContent = `roomID: ${roomID}`;
-    });
-
+    // 自動削除設定
     db.ref(`user/${roomID}/${connectionID}`).onDisconnect().remove();
     db.ref(`camerakey/${roomID}`).onDisconnect().remove();
   </script>
@@ -172,6 +174,7 @@
     - 3: 下45度<br>
     - 4: 右45度<br>
     <p id="output">roomIDが入ります</p>
+    <p id="name">usernameが入ります</p>
   </div>
 </body>
 </html>
