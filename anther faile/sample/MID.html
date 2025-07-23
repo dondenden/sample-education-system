@@ -3,31 +3,72 @@
 <head>
   <meta charset="UTF-8">
   <title>ルーム確認</title>
-</head>
-<style>
-input {
-    padding: 10px;
-    font-size: 1.2rem;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+  <style>
+    input {
+      padding: 10px;
+      font-size: 1.2rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
     }
-</style>
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      margin-left: 10px;
+    }
+  </style>
+  <!-- Firebaseライブラリ -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+</head>
 <body>
   <h2>入室準備中...</h2>
-  <input type="text" id="name" placeholder="名前を入れてください">
+  <input type="text" id="name" placeholder="名前を入力してください">
   <button onclick="enterRoom()">入室</button>
+
   <script>
+    // Firebase設定
+    const firebaseConfig = {
+      apiKey: "AIzaSyBFXUDC3U2glx7UbkyigIYxGkSw9qhlYMU",
+      authDomain: "realtimesyncapp-3e1d6.firebaseapp.com",
+      databaseURL: "https://realtimesyncapp-3e1d6-default-rtdb.firebaseio.com",
+      projectId: "realtimesyncapp-3e1d6",
+      storageBucket: "realtimesyncapp-3e1d6.appspot.com",
+      messagingSenderId: "584295413541",
+      appId: "1:584295413541:web:20a5ae6fcb742cf09d0ccc",
+      measurementId: "G-5YNKMHK2NY"
+    };
+
+    // Firebase初期化
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    // roomIDを取得（なければ作成）
     const urlParams = new URLSearchParams(window.location.search);
     let roomID = urlParams.get("room");
     if (!roomID) {
       roomID = Math.random().toString(36).substring(2, 10);
       history.replaceState(null, null, `?room=${roomID}`);
     }
-    function enterRoom(){
-        // 10秒後に BOT.html に遷移する（例：ローディング風）
-        setTimeout(() => {
-            window.location.href = `https://dondenden.github.io/sample-education-system/anther%20faile/sample/BOT?room=${encodeURIComponent(roomID)}`;
-        }, 3000);
+
+    // 入室処理
+    function enterRoom() {
+      const userName = document.getElementById("name").value.trim();
+      if (userName === "") {
+        alert("名前を入力してください。");
+        return;
+      }
+
+      // 一意のIDを生成してデータ保存
+      const connectionID = Math.random().toString(36).substring(2);
+      db.ref(`mid/${connectionID}`).set({
+        name: userName,
+        timestamp: Date.now()
+      });
+
+      // 3秒後にBOTページへ遷移（roomID付き）
+      setTimeout(() => {
+        window.location.href = `https://dondenden.github.io/sample-education-system/anther%20faile/sample/BOT?room=${encodeURIComponent(roomID)}`;
+      }, 3000);
     }
   </script>
 </body>
