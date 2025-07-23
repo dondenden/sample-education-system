@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8" />
-  <title>3Dモデル表示</title>
+  <title>3Dモデル表示3</title>
   <style>
     body {
       margin: 0;
@@ -159,6 +159,7 @@
     });
 
     db.ref(`user/${roomID}/${connectionID}`).onDisconnect().remove();
+    db.ref(`camerakey/${roomID}/${connectionID}`).onDisconnect().remove();
   </script>
 </head>
 
